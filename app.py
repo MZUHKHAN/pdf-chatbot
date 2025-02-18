@@ -16,8 +16,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+app = Flask(__name__)
 
-
+@app.route("/", methods=["get", "post"])
 # Extracting all the text from the PDFs and storing it in text
 def get_pdf_text(uploaded_files):
     text = ""
