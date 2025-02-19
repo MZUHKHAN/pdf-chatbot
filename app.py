@@ -21,9 +21,9 @@ app = Flask(__name__)
 
 @app.route("/", methods=["get", "post"])
 # Extracting all the text from the PDFs and storing it in text
-def get_pdf_text(uploaded_files):
+def get_pdf_text(pdf_docs):
     text = ""
-    for uploaded_file in uploaded_files:
+    for uploaded_file in pdf_docs:
         try:
             pdf_bytes = uploaded_file.read()  # Read file into bytes
             pdf_file = io.BytesIO(pdf_bytes)  # Create a file-like object from bytes
