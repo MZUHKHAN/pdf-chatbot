@@ -1,6 +1,6 @@
 import streamlit as st
 from flask import Flask, request
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader ,PdfFileWriter
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 import io
@@ -23,6 +23,7 @@ app = Flask(__name__)
 # Extracting all the text from the PDFs and storing it in text
 def get_pdf_text(pdf_docs):
     text = ""
+        pdf_writer = PyPDF2.PdfFileWriter(pdf_docs)              
     for uploaded_file in pdf_docs:
         try:
             pdf_bytes = uploaded_file.read()  # Read file into bytes
@@ -91,7 +92,7 @@ def main():
         if st.button("Submit & Process"):
             if pdf_docs:
                 with st.spinner("Processing..."):
-                    raw_text = get_pdf_text(pdf_docs)
+                    raw_text = get_pdf_text(pdf_writer)
                     text_chunks = get_text_chunks(raw_text)
                     get_vector_store(text_chunks)
                     st.success("Done")
