@@ -23,7 +23,7 @@ app = Flask(__name__)
 # Extracting all the text from the PDFs and storing it in text
 def get_pdf_text(pdf_docs):
     text = ""
-        pdf_writer = PyPDF2.PdfFileWriter(pdf_docs)              
+    pdf_writer = PyPDF2.PdfFileWriter(pdf_docs)              
     for uploaded_file in pdf_docs:
         try:
             pdf_bytes = uploaded_file.read()  # Read file into bytes
