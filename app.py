@@ -21,9 +21,9 @@ app = Flask(__name__)
 
 @app.route("/", methods=["get", "post"])
 # Extracting all the text from the PDFs and storing it in text
-def get_pdf_text(pdf_docs):
+def get_pdf_text(pdf_writer):
     text = ""
-    pdf_writer = PyPDF2.PdfFileWriter(pdf_docs)              
+    pdf_writer = PyPDF2.PdfFileWriter(pdf_writer)              
     for uploaded_file in pdf_docs:
         try:
             pdf_bytes = uploaded_file.read()  # Read file into bytes
