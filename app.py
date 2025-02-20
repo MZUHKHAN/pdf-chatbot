@@ -6,6 +6,7 @@ import os
 import io
 from io import BytesIO
 from openai import OpenAI
+from app import main 
 
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 import google.generativeai as genai
