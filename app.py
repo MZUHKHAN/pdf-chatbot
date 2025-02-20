@@ -100,5 +100,5 @@ def main():
                 st.warning("Please upload at least one PDF file.")
 
 
-#if __name__ == "__main__":
- #   main()
+if __name__ == "__main__":
+    main()
