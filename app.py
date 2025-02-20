@@ -6,7 +6,7 @@ import os
 import io
 from io import BytesIO
 from openai import OpenAI
-from app import main 
+#from app import main 
 
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 import google.generativeai as genai
@@ -18,9 +18,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-app = Flask(__name__)
+#app = Flask(__name__)
 
-@app.route("/", methods=["get", "post"])
+#@app.route("/", methods=["get", "post"])
 # Extracting all the text from the PDFs and storing it in text
 def get_pdf_text(uploaded_files):
     text = ""
@@ -100,5 +100,5 @@ def main():
                 st.warning("Please upload at least one PDF file.")
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+ #   main()
