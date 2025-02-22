@@ -10,7 +10,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
 def main(scope):
-    st.set_option('server.headless', True)
+    #st.set_option('server.headless', True)
     #st.set_option('runner.installTracer', False)
     #logging.basicConfig(level=logging.INFO)
     #logger = logging.getLogger(__name__)
