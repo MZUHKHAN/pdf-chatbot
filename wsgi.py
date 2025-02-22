@@ -1,9 +1,7 @@
-# wsgi.py
-
 import streamlit as st
-from streamlit.web import cli as stcli
+   from streamlit.web import cli as stcli
 
-def main():
-    stcli.main_run()
+   def main(*args):  # Include *args to accept any arguments passed by Gunicorn
+       stcli.main_run()
 
-application = main  # Make the application object available to Gunicorn
+   application = main  # Gunicorn will look for this variable
