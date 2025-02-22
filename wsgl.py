@@ -1,6 +1,12 @@
 import os
 import streamlit as st
 from streamlit.web import cli as stcli
+import sys
+
+# Get the directory containing wsgi.py
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Add the current directory to Python's import search path
+sys.path.insert(0, current_dir)
 
 def main():
     st.set_option('server.headless', True)
