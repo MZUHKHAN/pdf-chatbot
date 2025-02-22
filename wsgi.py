@@ -1,4 +1,9 @@
-from app import main  # Import your Streamlit app function
+# wsgi.py
 
-if __name__ == "__main__":
-    main()
+import streamlit as st
+from streamlit.web import cli as stcli
+
+def main():
+    stcli.run()
+
+application = main  # Make the application object available to Gunicorn
