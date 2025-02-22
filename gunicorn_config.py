@@ -12,8 +12,8 @@ sys.path.insert(0, current_dir)
 def main():
     #st.set_option('server.headless', True)
     #st.set_option('runner.installTracer', False)
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    #logging.basicConfig(level=logging.INFO)
+    #logger = logging.getLogger(__name__)
 
     port = int(os.environ.get("PORT", 8501))
     stcli.main_run(argv=["streamlit", "run", "app.py", "--server.port", str(port)])
