@@ -4,6 +4,6 @@ import streamlit as st
 from streamlit.web import cli as stcli
 
 def main():
-    stcli.run()
+    stcli.main_run()
 
 application = main  # Make the application object available to Gunicorn
