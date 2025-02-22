@@ -16,7 +16,8 @@ def main(scope):
     #logger = logging.getLogger(__name__)
 
     port = int(os.environ.get("PORT", 8501))
-    stcli.main_run(args=["streamlit", "run", "app.py", "--server.port", str(port)])
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app.py")
+    stcli.main_run(args=["streamlit", "run", file_path, "--server.port", str(port)])
 
     st.set_page_config(page_title="Chat with Multiple PDF", layout="wide")
     st.header("Chat with Multiple PDFs using Gemini")
