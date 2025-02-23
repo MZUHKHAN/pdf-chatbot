@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from streamlit.web import cli as stcli
-import importlib
+from importlib import import_module
 import sys
 
 # Get the directory containing wsgi.py
@@ -10,21 +10,15 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
 def main(scope):
-    #st.set_option('server.headless', True)
-    #st.set_option('runner.installTracer', False)
-    #logging.basicConfig(level=logging.INFO)
-    #logger = logging.getLogger(__name__)
+    st.set_page_config(page_title="Chat with Multiple PDF", layout="wide")
+    st.header("Chat with Multiple PDFs using Gemini")
 
     port = int(os.environ.get("PORT", 8501))
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app.py")
     stcli.main_run(args=["streamlit", "run", file_path, "--server.port", str(port)])
-
-    st.set_page_config(page_title="Chat with Multiple PDF", layout="wide")
-    st.header("Chat with Multiple PDFs using Gemini")
-
     user_question = st.text_input("Ask a Question from the PDF Files")
-
-    if user_question:
+    
+if user_question:
         user_input(user_question)
 
     with st.sidebar:
