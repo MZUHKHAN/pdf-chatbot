@@ -1,11 +1,8 @@
-# wsgi.py
 import os
 from streamlit.web import cli as stcli
 
 def main(environ, start_response):
-    """
-    WSGI entry point for the Streamlit app.
-    """
+    """WSGI entry point for the Streamlit app."""
     # Ensure the path to the main Streamlit script (app.py) is correct
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app.py")
 
