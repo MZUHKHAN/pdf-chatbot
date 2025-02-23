@@ -6,12 +6,10 @@ def main(environ, start_response):  # Add environ and start_response arguments
     """
     WSGI entry point for the Streamlit app.
     """
-    # start_response('200 OK', [('Content-Type', 'text/html')])
-    # return [b'Hello World']  # Streamlit handles rendering; no need to return "Hello World"
     streamlit_app()  # Call the streamlit_app function to start the Streamlit app
 
-    start_response('200 OK', [('Content-Type', 'text/html')])  # or whatever you want to return
-    #return [b'Hello World']
+    start_response('200 OK', [('Content-Type', 'text/html')])
+    return [b'']  # Return an empty iterable to satisfy the WSGI server
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8501))
