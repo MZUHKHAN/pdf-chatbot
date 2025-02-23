@@ -16,9 +16,10 @@ def main(scope):
     port = int(os.environ.get("PORT", 8501))
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app.py")
     stcli.main_run(args=["streamlit", "run", file_path, "--server.port", str(port)])
+    
     user_question = st.text_input("Ask a Question from the PDF Files")
     
-if user_question:
+    if user_question:
         user_input(user_question)
 
     with st.sidebar:
