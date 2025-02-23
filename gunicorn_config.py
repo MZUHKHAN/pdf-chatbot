@@ -9,7 +9,7 @@ def main(environ, start_response):
     user_question = st.text_input("Ask a Question from the PDF Files")
     
     if user_question:
-        user_input(user_question) # Assuming user_input is defined elsewhere
+        user_input(user_question)  # Assuming user_input is defined elsewhere
 
     with st.sidebar:
         st.title("Menu:")
@@ -17,14 +17,15 @@ def main(environ, start_response):
         if st.button("Submit & Process"):
             if pdf_docs:
                 with st.spinner("Processing..."):
-                    raw_text = get_pdf_text(pdf_docs) # Assuming get_pdf_text is defined
-                    text_chunks = get_text_chunks(raw_text) # Assuming get_text_chunks is defined
-                    get_vector_store(text_chunks) # Assuming get_vector_store is defined
+                    raw_text = get_pdf_text(pdf_docs)  # Assuming get_pdf_text is defined
+                    text_chunks = get_text_chunks(raw_text)  # Assuming get_text_chunks is defined
+                    get_vector_store(text_chunks)  # Assuming get_vector_store is defined
                     st.success("Done")
             else:
                 st.warning("Please upload at least one PDF file.")
-      start_response('200 OK', [('Content-Type', 'text/plain')])
-      return [b'Hello World']        
+    
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    return [b'Hello World']
 
 # Run the Streamlit app
 if __name__ == "__main__":
