@@ -25,11 +25,17 @@ def main(environ, start_response):
                 st.warning("Please upload at least one PDF file.")
     
     start_response('200 OK', [('Content-Type', 'text/plain')])
-    return [b'Hello World']
+    # return [b'Hello World']
 
 # Run the Streamlit app
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8501))
     stcli.main_run(
-        args=["streamlit", "run", "app.py", "--server.port", str(port)],
+        args=[
+            "streamlit",
+            "run",
+            os.path.basename(__file__),
+            "--server.port",
+            str(port),
+        ],
     )
