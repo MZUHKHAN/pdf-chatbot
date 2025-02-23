@@ -1,1 +1,1 @@
-web: gunicorn wsgi:main -w 4 -k uvicorn.workers.UvicornWorker --timeout 600
+gunicorn gunicorn_config:main -workers 4 --bind :$PORT
