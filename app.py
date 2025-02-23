@@ -97,5 +97,5 @@ def streamlit_app():
             else:
                 st.warning("Please upload at least one PDF file.")
 
- if __name__ == "__main__":
-    streamlit_app()
+    if __name__ == "__main__":
+     streamlit_app()
