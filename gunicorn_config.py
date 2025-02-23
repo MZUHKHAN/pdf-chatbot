@@ -28,5 +28,5 @@ def main():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8501))
     stcli.main_run(
-        args=["streamlit", "run", os.path.basename(__file__), "--server.port", str(port)],  # Update this line
+        args=["streamlit", "run", "app.py", "--server.port", str(port)],
     )
