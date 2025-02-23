@@ -2,7 +2,7 @@ import os
 import streamlit as st
 from streamlit.web import cli as stcli
 
-def main():
+def main(environ, start_response):
     st.set_page_config(page_title="Chat with Multiple PDF", layout="wide")
     st.header("Chat with Multiple PDFs using Gemini")
 
@@ -23,6 +23,8 @@ def main():
                     st.success("Done")
             else:
                 st.warning("Please upload at least one PDF file.")
+      start_response('200 OK', [('Content-Type', 'text/plain')])
+      return [b'Hello World']        
 
 # Run the Streamlit app
 if __name__ == "__main__":
