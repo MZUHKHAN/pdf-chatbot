@@ -6,19 +6,20 @@ def main(environ, start_response):  # Add environ and start_response arguments
     """
     WSGI entry point for the Streamlit app.
     """
-    streamlit_app()  # Call the streamlit_app function to start the Streamlit app
 
+    # Get the file path to app.py
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app.py")
+
+    # Build the arguments for stcli.main_run
+    args = ["streamlit", "run", file_path, "--server.port", str(environ.get("PORT", 8501))]
+
+    # Start the Streamlit server
+    stcli.main_run(args)
+
+    # Indicate that the response is ready
     start_response('200 OK', [('Content-Type', 'text/html')])
     return [b'']  # Return an empty iterable to satisfy the WSGI server
 
+
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8501))
-    stcli.main_run(
-        args=[
-            "streamlit",
-            "run",
-            os.path.basename(__file__),
-            "--server.port",
-            str(port),
-        ],
-    )
+    main()
