@@ -1,3 +1,4 @@
+# app.py
 import streamlit as st
 from flask import Flask, request
 from PyPDF2 import PdfReader ,PdfFileWriter
@@ -50,52 +51,57 @@ def get_vector_store(text_chunks):
     vector_store.save_local("mohsin_faiss_index")
 
 
-# The language model (LLM) takes the documents retrieved by the similarity search (stored in the docs variable) and uses them as context to generate a detailed and coherent answer to the user's question.
 def get_conversational_chain():
     prompt_template = """
     Answer the Question as detailed as possible from the provided context
     Context: \n{context}?\n
-    Question: \n{question}\n
-
+    Question: \n{question}?\n
     Answer:
     """
-    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
-    prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-    chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
+    PROMPT = PromptTemplate(
+        template=prompt_template, input_variables=["context", "question"]
+    )
+    chain = load_qa_chain(
+        llm=ChatGoogleGenerativeAI(model="gemini-pro", temperature=0),
+        chain_type="stuff",
+        prompt=PROMPT,
+    )
     return chain
 
-
-# When the chain is returned from get_conversational_chain, it is an object that can take inputs in the form of a dictionary. This dictionary should contain the necessary inputs (such as the input_documents and question in this case) required to generate the response.
-# The chain object returned by get_conversational_chain is already predefined and configured with the necessary prompt template, model, and chain type. Once this chain object is returned, you can pass the required parameters to it to generate a response.
-def user_input(user_question):
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    new_db = FAISS.load_local("mohsin_faiss_index", embeddings, allow_dangerous_deserialization=True)
-    docs = new_db.similarity_search(user_question)
-    chain = get_conversational_chain()
-    response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
-    st.write("Reply:", response["output_text"])  # Print the output text from the response list
 
 def streamlit_app():
     st.set_page_config(page_title="Chat with Multiple PDF", layout="wide")
     st.header("Chat with Multiple PDFs using Gemini")
 
     user_question = st.text_input("Ask a Question from the PDF Files")
-    
+
     if user_question:
-        user_input(user_question)  # Assuming user_input is defined elsewhere
+        try:
+            chain = get_conversational_chain()
+            vector_store = FAISS.load_local(
+                "mohsin_faiss_index",
+                GoogleGenerativeAIEmbeddings(model="models/embedding-001"),
+            )
+            docs = vector_store.similarity_search(user_question)
+            response = chain.run(input_documents=docs, question=user_question)
+            st.write(response)
+        except Exception as e:
+            st.error(f"Error generating response: {e}")
 
     with st.sidebar:
         st.title("Menu:")
-        pdf_docs = st.file_uploader("Upload your PDF Files", type="pdf", accept_multiple_files=True)
+        pdf_docs = st.file_uploader(
+            "Upload your PDF Files", type="pdf", accept_multiple_files=True)
         if st.button("Submit & Process"):
             if pdf_docs:
                 with st.spinner("Processing..."):
-                    raw_text = get_pdf_text(pdf_docs)  # Assuming get_pdf_text is defined
-                    text_chunks = get_text_chunks(raw_text)  # Assuming get_text_chunks is defined
-                    get_vector_store(text_chunks)  # Assuming get_vector_store is defined
+                    raw_text = get_pdf_text(pdf_docs)
+                    text_chunks = get_text_chunks(raw_text)
+                    get_vector_store(text_chunks)
                     st.success("Done")
             else:
                 st.warning("Please upload at least one PDF file.")
 
-    if __name__ == "__main__":
-     streamlit_app()
+
+if __name__ == "__main__":
+    streamlit_app()
